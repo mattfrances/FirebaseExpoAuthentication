@@ -1,52 +1,55 @@
-import { useNavigation } from '@react-navigation/core'
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { auth } from '../firebase'
+import { useNavigation } from "@react-navigation/core";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { authentication } from "../firebase";
+import { signOut } from "firebase/auth";
 
 const HomeScreen = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const handleSignOut = () => {
-    auth
-      .signOut()
+    signOut(authentication)
       .then(() => {
-        navigation.replace("Login")
+        navigation.replace("Login");
       })
-      .catch(error => alert(error.message))
-  }
+      .catch((error) => alert(error.message));
+  };
 
   return (
     <View style={styles.container}>
-      <Text>Email: {auth.currentUser?.email}</Text>
-      <TouchableOpacity
-        onPress={handleSignOut}
-        style={styles.button}
-      >
+      <Text>Email: {authentication.currentUser?.email}</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSignOut}>
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
-export default HomeScreen
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
-   button: {
-    backgroundColor: '#0782F9',
-    width: '60%',
+  button: {
+    backgroundColor: "#7c0eb3",
+    width: "60%",
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 40,
   },
+  buttonOutline: {
+    backgroundColor: "white",
+    marginTop: 5,
+    borderColor: "#7c0eb3",
+    borderWidth: 2,
+  },
   buttonText: {
-    color: 'white',
-    fontWeight: '700',
+    color: "white",
+    fontWeight: "700",
     fontSize: 16,
   },
-})
+});
